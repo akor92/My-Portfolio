@@ -1,0 +1,39 @@
+# ---------------------------------------------------------
+# # PART 1: THE DEPLOYMENT (Manages the Containers/Pods)
+# # ---------------------------------------------------------
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: portfolio-deployment
+#   spec:
+#     replicas: 2 # 💡 This tells K8s to run TWO identical copies of your site!
+#       selector:
+#           matchLabels:
+#                 app: my-portfolio
+#                   template:
+#                       metadata:
+#                             labels:
+#                                     app: my-portfolio
+#                                         spec:
+#                                               containers:
+#                                                     - name: portfolio-web
+#                                                             # This points directly to the image Jenkins just pushed!
+#                                                                     image: akor92/devops-portfolio:latest 
+#                                                                             ports:
+#                                                                                     - containerPort: 80 # Nginx listens on port 80 inside the container
+#
+#                                                                                     ---
+#                                                                                     # ---------------------------------------------------------
+#                                                                                     # PART 2: THE SERVICE (The Front Door / Networking)
+#                                                                                     # ---------------------------------------------------------
+#                                                                                     apiVersion: v1
+#                                                                                     kind: Service
+#                                                                                     metadata:
+#                                                                                       name: portfolio-service
+#                                                                                       spec:
+#                                                                                         type: LoadBalancer # Exposes the app outside the K8s cluster
+#                                                                                           selector:
+#                                                                                               app: my-portfolio # Connects this door to the pods labeled above
+#                                                                                                 ports:
+#                                                                                                     - port: 8080       # The port you will type into your browser
+#                                                                                                           targetPort: 80   # The port it routes to on the container
