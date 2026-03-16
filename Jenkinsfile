@@ -2,7 +2,6 @@ pipeline {
     agent any 
     
     environment {
-        // Your specific Docker Hub username and image name
         DOCKERHUB_USER = 'akor92'
         IMAGE_NAME = 'devops-portfolio'
     }
@@ -11,7 +10,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building the Docker image...'
-                // Double quotes are okay here because we are using variables from the environment block above
                 sh "docker build -t ${DOCKERHUB_USER}/${IMAGE_NAME}:latest ."
             }
         }
@@ -20,12 +18,22 @@ pipeline {
             steps {
                 echo 'Logging in and pushing to Docker Hub...'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-                    // ⚠️ Single quotes are MANDATORY here so the terminal reads the secret variables!
                     sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
-                    
-                    // Pushing the final image
                     sh "docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest"
                 }
+            }
+        }
+        
+        // 🚀 THE NEW CD STAGE 🚀
+        stage('Deploy to Kubernetes') {
+            steps {
+                echo 'Deploying to the local Kubernetes cluster...'
+                
+                // 1. Tell K8s to apply your infrastructure blueprint
+                sh 'kubectl apply -f deployment.yaml'
+                
+                // 2. The DevOps Secret Sauce: Force a restart!
+                sh 'kubectl rollout restart deployment portfolio-deployment'
             }
         }
     }
