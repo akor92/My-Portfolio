@@ -35,5 +35,5 @@
 #                                                                                           selector:
 #                                                                                               app: my-portfolio # Connects this door to the pods labeled above
 #                                                                                                 ports:
-#                                                                                                     - port: 8080       # The port you will type into your browser
+#                                                                                                     - port: 8081       # The port you will type into your browser
 #                                                                                                           targetPort: 80   # The port it routes to on the container
