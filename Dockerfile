@@ -2,9 +2,10 @@
 # Alpine is super lightweight (around 5MB!), which is a DevOps best practice.
 FROM nginx:alpine
 
-# Step 2: Copy your index.html file from your computer into the container
+# Step 2: Copy your site files from your computer into the container
 # Nginx automatically serves files located in this specific directory.
 COPY index.html /usr/share/nginx/html/index.html
+COPY movie-explorer/ /usr/share/nginx/html/movie-explorer/
 
 # Step 3: Tell Docker that this container will listen on port 80
 EXPOSE 80

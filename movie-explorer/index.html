@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineVerse — Hollywood, Nollywood & K-Drama Discovery</title>
+<meta name="description" content="Browse and discover Hollywood movies, Nollywood films, and Korean dramas — trailers, ratings, and legal watch links.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="brand" title="Back to portfolio">
+        <span class="brand-mark">Cine</span><span class="brand-mark-accent">Verse</span>
+      </a>
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-tab="trending">Trending</button>
+        <button class="tab" data-tab="hollywood">Hollywood</button>
+        <button class="tab" data-tab="nollywood">Nollywood</button>
+        <button class="tab" data-tab="kdrama">K-Drama</button>
+        <button class="tab" data-tab="watchlist">My List</button>
+      </nav>
+      <div class="header-actions">
+        <form id="search-form" class="search-form" autocomplete="off">
+          <input type="search" id="search-input" placeholder="Search titles…" aria-label="Search titles">
+        </form>
+        <button id="settings-btn" class="icon-btn" title="API settings" aria-label="Settings">⚙</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="hero" hidden>
+    <div class="hero-backdrop" id="hero-backdrop"></div>
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <h1 id="hero-title"></h1>
+      <p id="hero-overview"></p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="hero-info-btn">More Info</button>
+        <button class="btn btn-ghost" id="hero-list-btn">+ My List</button>
+      </div>
+    </div>
+  </section>
+
+  <main class="content">
+    <div class="section-heading">
+      <h2 id="section-title">Trending Now</h2>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="grid-status" id="grid-status"></div>
+    <button class="btn btn-outline load-more" id="load-more" hidden>Load more</button>
+  </main>
+
+  <footer class="site-footer">
+    <p>Built as a portfolio project. Metadata, posters, and trailers courtesy of <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">The Movie Database (TMDB)</a>. This product uses the TMDB API but is not endorsed or certified by TMDB. All film/show titles, images, and video content remain the property of their respective owners.</p>
+    <p class="footer-note">CineVerse links out to official trailers and legitimate watch providers only — it does not host or stream any copyrighted video.</p>
+  </footer>
+
+  <!-- Detail modal -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- API key setup modal -->
+  <div class="modal-overlay" id="key-modal-overlay" hidden>
+    <div class="modal key-modal" role="dialog" aria-modal="true">
+      <h2>Connect a TMDB API Key</h2>
+      <p>CineVerse pulls live movie &amp; drama data from <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>. Get a free key, then paste it below — it's stored only in your browser (localStorage), never sent anywhere else.</p>
+      <ol class="key-steps">
+        <li>Create a free account at <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org/signup</a></li>
+        <li>Go to Settings → <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">API</a> and request a "Developer" key</li>
+        <li>Copy the "API Read Access Token" (v4 auth) or the v3 "API Key" and paste it here</li>
+      </ol>
+      <form id="key-form">
+        <input type="text" id="key-input" placeholder="Paste your TMDB API key or Read Access Token" required>
+        <button type="submit" class="btn btn-primary">Save & Continue</button>
+      </form>
+      <p id="key-error" class="key-error" hidden></p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
